@@ -86,17 +86,20 @@ namespace ProcessInjection
     public static Browsers GetDefaultBrowser()
     {
       Browsers browser;
+      string progId;
       using (RegistryKey userChoiceKey = Registry.CurrentUser.OpenSubKey(CHOICE_KEY)) {
         if (userChoiceKey == null) {
-          browser = Browsers.Unknown;
-          break;
+          Console.WriteLine("[!] No user choice for browser in registry.");
+          return Browsers.Unknown;
         }
         object progIdValue = userChoiceKey.GetValue("Progid");
         if (progIdValue == null) {
-          browser = Browsers.Unknown;
-          break;
+          Console.WriteLine("[!] No progid for browser in registry.");
+          return Browsers.Unknown;
         }
         progId = progIdValue.ToString();
+        Console.WriteLine($"[>] Browser Prog ID: {progId}");
+
         switch (progId) {
           case "IE.HTTP":
             browser = Browsers.InternetExplorer;
@@ -154,11 +157,12 @@ namespace ProcessInjection
         } else if (name.ToLower().Contains("opera")) {
           return Browsers.Opera;
         }
+        Console.WriteLine($"[!] Unknown browser open value: {name}");
         return Browsers.Unknown;
 
 
       } catch (Exception ex) {
-        name = string.Format("ERROR: An exception of type: {0} occurred in method: {1} in the following module: {2}", ex.GetType(), ex.TargetSite, this.GetType());
+        Console.WriteLine("[!] Error reading browser open registry");
       } finally {
         //check and see if the key is still open, if so
         //then close it
