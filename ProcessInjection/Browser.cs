@@ -120,8 +120,9 @@ namespace ProcessInjection
           return Browsers.Opera;
         }
       }
+      Console.WriteLine($"[!] Unknown default browser by progid: {name}");
 
-      return browser;
+      return Browsers.Unknown;
     }
     public static Browsers GetDefaultHTTP()
     {
