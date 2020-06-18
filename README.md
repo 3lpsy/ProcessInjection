@@ -44,3 +44,12 @@ The `spawn` argument tells the runner which program to spawn and inject into. It
 
 - .Net ShellCode https://github.com/TheWover/donut
 - Parent Spoofing: https://github.com/3xpl01tc0d3r/ProcessInjection/blob/master/ProcessInjection/Program.cs
+
+## Todos:
+
+- Accept "browser" for parent/spawn/pid arguments and autofind targets
+- Process hollowing
+- APC Queue
+- Clean up Win32
+- Simple targets and keys
+- Parseable targets via regex

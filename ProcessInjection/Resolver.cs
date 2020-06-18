@@ -34,6 +34,12 @@ namespace ProcessInjection
       int pid;
       if (pidStr == "self") {
         pid = Process.GetCurrentProcess().Id;
+      } else if (pidStr.ToLower() == "browser") {
+        pid = Browser.FindBrowserPid();
+        if (pid < 1) {
+          Console.WriteLine($"[!] Unable to find browser pid");
+          return 0;
+        }
       } else if (!Parser.IsOnlyDigits(pidStr)) {
         pid = Resolver.FindProcIdByName(pidStr);
         if (pid < 1) {
