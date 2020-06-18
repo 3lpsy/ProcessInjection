@@ -32,6 +32,39 @@ namespace ProcessInjection
 
       return 0;
     }
+
+    public static string FindBrowserExePath()
+    {
+      string[] progPaths = new string[] {
+            "Google\\Chrome\\Application\\chrome.exe",
+            "Google\\Chrome SxS\\Application\\chrome.exe",
+            "Mozilla Firefox\\firefox.exe"
+        };
+
+      string programFiles = Environment.ExpandEnvironmentVariables("%ProgramW6432%");
+
+      foreach (string progPath in progPaths) {
+        var resPath = Path.Combine(programFiles, progPath);
+        Console.WriteLine($"[>] Looking for {resPath}");
+        if (File.Exist(resPath)) {
+          Console.WriteLine($"[>] Browser path found: {resPath}");
+          return resPath;
+        }
+      }
+      string edge = "C:\\Windows\\SystemApps\\Microsoft.MicrosoftEdge_8wekyb3d8bbwe\\MicrosoftEdge.exe";
+
+      if (File.Exists(edge)) {
+        return edge;
+      }
+
+      string ie = "C:\\Program Files\\Internet Explorer\\iexplorer.exe";
+      if (File.Exists(ie)) {
+        return ie;
+      }
+      return String.Empty;
+
+    }
+
     public static int FindBrowserPid()
     {
       int pid;

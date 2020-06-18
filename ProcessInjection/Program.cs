@@ -82,7 +82,11 @@ namespace ProcessInjection
       } else {
         // main work after key check
         if (parent.Length > 0) {
-          spawn = Resolver.FullExeInPath(spawn);
+          if (spawn.ToLower() == "browser") {
+            spawn = Browser.FindBrowserExePath(spawn);
+          } else {
+            spawn = Resolver.FullExeInPath(spawn);
+          }
           if (spawn.Length < 1 || !File.Exists(spawn)) {
             Console.WriteLine($"[!] Spawn path {spawn} does not exist and could not be found.");
             return;

@@ -28,17 +28,17 @@ You can either target a live process (PID / live mode) to inject into or you can
 
 ### PID / Live Mode
 
-The `pid` value accepts a valid PID, a program to search for (explorer.exe/notepad.exe), or "self". When searching, the pid is resolved from the current session so the process needs to be in the same session. For self, the runner will just inject into itself and wait forever.
+The `pid` value accepts a valid PID, a program to search for (explorer.exe/notepad.exe), or "self". When searching, the pid is resolved from the current session so the process needs to be in the same session. For self, the runner will just inject into itself and wait forever. There is an additional alias called `browser` that attempts to first inject into the user's default browser and then blindly checks for running chrome and IE instances.
 
 ### Parent Mode
 
 The `parent` argument can be either a valid running PID or a program name (explorer/program.exe). When searching for the program name, a running PID for that program must exist in the same session.
 
-The `spawn` argument tells the runner which program to spawn and inject into. It can either be a fully qualified path to an EXE or a basename like "explorer.exe". The runner will search the \$PATH environment variable for the executable.
+The `spawn` argument tells the runner which program to spawn and inject into. It can either be a fully qualified path to an EXE or a basename like "explorer.exe". The runner will search the \$PATH environment variable for the executable. The spawn argument also has a browser alias that looks for common brower executables.
 
 ## Known Issues
 
-- cmd.exe does not work with spawn.
+- cmd.exe may not work with spawn.
 
 ### References
 
