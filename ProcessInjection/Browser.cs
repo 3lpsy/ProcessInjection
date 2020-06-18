@@ -19,6 +19,19 @@ namespace ProcessInjection
 
     }
 
+    public static enum Season
+    {
+      Unknown,
+      InternetExplorer,
+      Firefox,
+      Chrome,
+      Opera,
+      Safari,
+      Edge
+
+    }
+
+
     public static BrowserApplication GetDefaultBrowser()
     {
       BrowserApplication browser;
