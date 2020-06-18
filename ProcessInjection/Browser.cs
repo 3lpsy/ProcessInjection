@@ -15,7 +15,7 @@ namespace ProcessInjection
   {
     public static string CHOICE_KEY = "Software\\Microsoft\\Windows\\Shell\\Associations\\UrlAssociations\\http\\UserChoice";
 
-    public static int FindBrowserPid()
+    public static int GetDefaultBrowserPid()
     {
       Browsers def = GetDefaultBrowser();
       if (def == Browsers.Unknown || def == Browsers.Safari) {
@@ -27,6 +27,13 @@ namespace ProcessInjection
       if (pid > 0) {
         return pid;
       }
+      return 0;
+    }
+    public static int FindBrowserPid()
+    {
+      int pid;
+
+      pid = GetDefaultBrowserPid();
 
       if (def != Browsers.Chrome) {
         Console.WriteLine("[!] Default browser pid not found. Checking chrome anyways");
@@ -86,7 +93,7 @@ namespace ProcessInjection
     public static Browsers GetDefaultBrowser()
     {
       Browsers browser;
-      string progId;
+      string name;
       using (RegistryKey userChoiceKey = Registry.CurrentUser.OpenSubKey(CHOICE_KEY)) {
         if (userChoiceKey == null) {
           Console.WriteLine("[!] No user choice for browser in registry.");
@@ -97,31 +104,20 @@ namespace ProcessInjection
           Console.WriteLine("[!] No progid for browser in registry.");
           return Browsers.Unknown;
         }
-        progId = progIdValue.ToString();
-        Console.WriteLine($"[>] Browser Prog ID: {progId}");
-
-        switch (progId) {
-          case "IE.HTTP":
-            browser = Browsers.InternetExplorer;
-            break;
-          case "FirefoxURL":
-            browser = Browsers.Firefox;
-            break;
-          case "ChromeHTML":
-            browser = Browsers.Chrome;
-            break;
-          case "OperaStable":
-            browser = Browsers.Opera;
-            break;
-          case "SafariHTML":
-            browser = Browsers.Safari;
-            break;
-          case "AppXq0fevzme2pys62n3e0fbqa7peapykr8v":
-            browser = Browsers.Edge;
-            break;
-          default:
-            browser = Browsers.Unknown;
-            break;
+        name = progIdValue.ToString();
+        Console.WriteLine($"[>] Browser Prog ID: {name}");
+        if (name.ToLower().Contains("firefox")) {
+          return Browsers.Firefox;
+        } else if (name.ToLower().Contains("chrome")) {
+          return Browsers.Chrome;
+        } else if (name.ToLower().Contains("edge") || name.ToLower().Contains("")) {
+          return Browsers.Edge;
+        } else if (name.ToLower().Contains("safari")) {
+          return Browsers.Safari;
+        } else if (name.ToLower().Contains("iexplorer") || name.ToLower().StartsWith("ie")) {
+          return Browsers.InternetExplorer;
+        } else if (name.ToLower().Contains("opera")) {
+          return Browsers.Opera;
         }
       }
 
@@ -152,7 +148,7 @@ namespace ProcessInjection
           return Browsers.Edge;
         } else if (name.ToLower().Contains("safari")) {
           return Browsers.Safari;
-        } else if (name.ToLower().Contains("iexplorer") || name.ToLower().StartsWith("ie")) {
+        } else if (name.ToLower().Contains("iexplorer") || name.ToLower().StartsWith("AppX")) {
           return Browsers.InternetExplorer;
         } else if (name.ToLower().Contains("opera")) {
           return Browsers.Opera;
