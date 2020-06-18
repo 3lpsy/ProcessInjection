@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Parent.cs" />
+        <Compile Include="Parser.cs" />
+
     <Compile Include="Resolver.cs" />
     <Compile Include="Simple.cs" />
     <Compile Include="Win32.cs" />
