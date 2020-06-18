@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.IO;
 using System.Threading;
 using System.Collections.Generic;
-namespace ProcessInjection
+namespace Runner
 {
   class Simple
   {

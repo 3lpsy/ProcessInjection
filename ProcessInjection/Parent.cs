@@ -7,7 +7,7 @@ using System.Security.Principal;
 using System.Diagnostics;
 using System.Threading;
 
-namespace ProcessInjection
+namespace Runner
 {
 
   class Parent

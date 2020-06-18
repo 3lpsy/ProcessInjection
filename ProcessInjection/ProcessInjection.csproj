@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{D700FC6A-CDAE-4DDB-97F5-D50B98CCD41F}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ProcessInjection</RootNamespace>
-    <AssemblyName>ProcessInjection</AssemblyName>
+    <RootNamespace>Runner</RootNamespace>
+    <AssemblyName>Runner</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
