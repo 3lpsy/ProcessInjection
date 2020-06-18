@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Security.Permissions;
 using Microsoft.Win32;
+using System.IO;
 namespace ProcessInjection
 {
 
