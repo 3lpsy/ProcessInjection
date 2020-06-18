@@ -35,21 +35,19 @@ namespace ProcessInjection
 
       pid = GetDefaultBrowserPid();
 
-      if (def != Browsers.Chrome) {
-        Console.WriteLine("[!] Default browser pid not found. Checking chrome anyways");
-        pid = FindPidForBrowser(Browsers.Chrome);
-        if (pid > 0) {
-          return pid;
-        }
+      Console.WriteLine("[!] Default browser pid not found. Checking chrome anyways");
+      pid = FindPidForBrowser(Browsers.Chrome);
+      if (pid > 0) {
+        return pid;
       }
 
-      if (def != Browsers.InternetExplorer) {
-        Console.WriteLine("[!] Default browser pid not found. Checking InternetExplorer anyways");
-        pid = FindPidForBrowser(Browsers.InternetExplorer);
-        if (pid > 0) {
-          return pid;
-        }
+
+      Console.WriteLine("[!] Default browser pid not found. Checking InternetExplorer anyways");
+      pid = FindPidForBrowser(Browsers.InternetExplorer);
+      if (pid > 0) {
+        return pid;
       }
+
       Console.WriteLine("[!] Could not find default browser pid");
       return 0;
     }
