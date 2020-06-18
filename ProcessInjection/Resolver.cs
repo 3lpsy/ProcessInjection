@@ -151,6 +151,19 @@ namespace ProcessInjection
       return pid;
     }
 
+    public static int FindFirstPidByName(string[] names)
+    {
+      int pid;
+      foreach (string name in names) {
+        pid = FindProcIdByName(name);
+        if (pid > 0) {
+          Console.WriteLine($"[>] Found pid for name {name}");
+          return 0;
+        }
+      }
+      return 0;
+    }
+
     public static WebClient GetWebClient()
     {
       WebClient wc = new WebClient();
