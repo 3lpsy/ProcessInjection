@@ -47,7 +47,6 @@ The `spawn` argument tells the runner which program to spawn and inject into. It
 
 ## Todos:
 
-- Accept "browser" for parent/spawn/pid arguments and autofind targets
 - Process hollowing
 - APC Queue
 - Clean up Win32
