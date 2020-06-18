@@ -35,13 +35,14 @@ namespace ProcessInjection
           currval = currval + allargs[i];
         }
       }
+      return arguments;
     }
 
     public static bool IsOnlyDigits(string pid)
     {
       bool hasAlpha = false;
       foreach (char c in pid.ToCharArray()) {
-        if (!c.IsDigit()) {
+        if (!Char.IsDigit(c)) {
           hasAlpha = true;
         }
       }
@@ -111,6 +112,12 @@ namespace ProcessInjection
           Console.WriteLine($"[+] Argument {key}: {val}");
         }
       }
+    }
+    public static string ReverseString(string s)
+    {
+      char[] charArray = s.ToCharArray();
+      Array.Reverse(charArray);
+      return new string(charArray);
     }
   }
 }

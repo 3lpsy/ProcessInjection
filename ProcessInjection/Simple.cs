@@ -1,8 +1,15 @@
+using System;
+using System.Diagnostics;
+using System.Net;
+using System.Runtime.InteropServices;
+using System.IO;
+using System.Threading;
+using System.Collections.Generic;
 namespace ProcessInjection
 {
   class Simple
   {
-    public static void Run(byte[] sc, int pid, bool isSelf)
+    public static IntPtr Run(byte[] sc, int pid, bool isSelf)
     {
       // Find the target process
       Process target = Process.GetProcessById(pid);
@@ -62,6 +69,7 @@ namespace ProcessInjection
         }
       }
       Console.WriteLine("[>] Done!");
+      return hProcess;
     }
   }
 }

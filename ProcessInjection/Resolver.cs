@@ -22,27 +22,27 @@ namespace ProcessInjection
 
       var values = Environment.GetEnvironmentVariable("PATH");
       foreach (var path in values.Split(Path.PathSeparator)) {
-        var fullPath = Path.Combine(path, fileName);
+        var fullPath = Path.Combine(path, name);
         if (File.Exists(fullPath))
           return fullPath;
       }
       return "";
     }
 
-    public static int PID(string pid)
+    public static int PID(string pidStr)
     {
-      if (parsed["pid"] == "self") {
-        isSelf = true;
+      int pid;
+      if (pidStr == "self") {
         pid = Process.GetCurrentProcess().Id;
-      } else if (!Parser.IsOnlyDigits(parsed["pid"])) {
-        pid = Resolver.FindProcIdByName(parsed["pid"]);
+      } else if (!Parser.IsOnlyDigits(pidStr)) {
+        pid = Resolver.FindProcIdByName(pidStr);
         if (pid < 1) {
-          string dbgPid = parsed["pid"];
+          string dbgPid = pidStr;
           Console.WriteLine($"[!] Unable to resolve pid for proc {dbgPid}");
           return 0;
         }
       } else {
-        pid = int.Parse(parsed["pid"]);
+        pid = int.Parse(pidStr);
       }
       return pid;
     }
@@ -58,7 +58,7 @@ namespace ProcessInjection
         }
       }
 
-      if (form != "bin" || form != "binary" || form != "b64" || form != "base64") {
+      if (form != "bin" && form != "binary" && form != "b64" && form != "base64") {
         Console.WriteLine($"[!] Invalid value '{form}' for form. Needs to be bin or b64.");
         return empty;
       }
@@ -114,7 +114,7 @@ namespace ProcessInjection
             return File.ReadAllBytes(targ);
           } catch (Exception ex) {
             Console.Error.WriteLine("[x] Error reading data: {0}", ex.Message);
-            return;
+            return empty;
           }
         }
       } else {
