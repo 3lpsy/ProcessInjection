@@ -40,6 +40,30 @@ namespace ProcessInjection
           Console.WriteLine($"[!] Unable to find browser pid");
           return 0;
         }
+      } else if (pidStr.ToLower() == "firefox") {
+        pid = Browser.FindPidForBrowser(Browser.Browsers.Firefox);
+        if (pid < 1) {
+          Console.WriteLine($"[!] Unable to find browser pid");
+          return 0;
+        }
+      } else if (pidStr.ToLower() == "chrome") {
+        pid = Browser.FindPidForBrowser(Browser.Browsers.Chrome);
+        if (pid < 1) {
+          Console.WriteLine($"[!] Unable to find browser pid");
+          return 0;
+        }
+      } else if (pidStr.ToLower() == "iexplorer" || pidStr.ToLower() == "ie") {
+        pid = Browser.FindPidForBrowser(Browser.Browsers.InternetExplorer);
+        if (pid < 1) {
+          Console.WriteLine($"[!] Unable to find browser pid");
+          return 0;
+        }
+      } else if (pidStr.ToLower() == "edge") {
+        pid = Browser.FindPidForBrowser(Browser.Browsers.Edge);
+        if (pid < 1) {
+          Console.WriteLine($"[!] Unable to find browser pid");
+          return 0;
+        }
       } else if (!Parser.IsOnlyDigits(pidStr)) {
         pid = Resolver.FindProcIdByName(pidStr);
         if (pid < 1) {
