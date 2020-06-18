@@ -6,7 +6,8 @@ using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Diagnostics;
 using System.Threading;
-
+using System.Security.Permissions;
+using Microsoft.Win32;
 namespace ProcessInjection
 {
 
@@ -16,8 +17,8 @@ namespace ProcessInjection
 
     public static int FindBrowserPid()
     {
-      Browser def = GetDefaultBrowser();
-      if (def == Browser.Unknown || def == Browser.Safari) {
+      Browsers def = GetDefaultBrowser();
+      if (def == Browsers.Unknown || def == Browsers.Safari) {
         def = GetDefaultHTTP();
       }
       int pid;
@@ -27,17 +28,17 @@ namespace ProcessInjection
         return pid;
       }
 
-      if (def != Browser.Chrome) {
+      if (def != Browsers.Chrome) {
         Console.WriteLine("[!] Default browser pid not found. Checking chrome anyways");
-        pid = FindPidForBrowser(Browser.Chrome);
+        pid = FindPidForBrowser(Browsers.Chrome);
         if (pid > 0) {
           return pid;
         }
       }
 
-      if (def != Browser.InternetExplorer) {
+      if (def != Browsers.InternetExplorer) {
         Console.WriteLine("[!] Default browser pid not found. Checking InternetExplorer anyways");
-        pid = FindPidForBrowser(Browser.InternetExplorer);
+        pid = FindPidForBrowser(Browsers.InternetExplorer);
         if (pid > 0) {
           return pid;
         }
@@ -46,30 +47,30 @@ namespace ProcessInjection
       return 0;
     }
 
-    public static int FindPidForBrowser(Browser b)
+    public static int FindPidForBrowser(Browsers b)
     {
       string[] checks;
 
-      if (b != Browser.Unknown && b != Browser.Safari) {
-        if (b == Browser.InternetExplorer) {
+      if (b != Browsers.Unknown && b != Browsers.Safari) {
+        if (b == Browsers.InternetExplorer) {
           checks = new string[] { "iexplorer", "Internet Explorer" };
           return Resolver.FindFirstPidByName(checks);
-        } else if (b == Browser.Chrome) {
+        } else if (b == Browsers.Chrome) {
           checks = new string[] { "Chrome", "chrome", "chromium", "GoogleUpdate", "gupdate", "gupdatem" };
           return Resolver.FindFirstPidByName(checks);
-        } else if (b == Browser.Firefox) {
+        } else if (b == Browsers.Firefox) {
           checks = new string[] { "Firefox", "firefox", "waterfox" };
           return Resolver.FindFirstPidByName(checks);
-        } else if (b == Browser.Edge) {
+        } else if (b == Browsers.Edge) {
           checks = new string[] { "Edge", "edge", "MicrosoftEdge", "MicrosoftEdgeCP" };
-          return Resolver.indFirstPidByName(checks);
+          return Resolver.FindFirstPidByName(checks);
         }
       }
-      Console.WriteLine("[!] Unknown browser.");
+      Console.WriteLine("[!] Unknown Browsers.");
       return 0;
     }
 
-    public static enum Browser
+    public enum Browsers
     {
       Unknown,
       InternetExplorer,
@@ -82,48 +83,48 @@ namespace ProcessInjection
     }
 
 
-    public static Browser GetDefaultBrowser()
+    public static Browsers GetDefaultBrowser()
     {
-      Browser browser;
+      Browsers browser;
       using (RegistryKey userChoiceKey = Registry.CurrentUser.OpenSubKey(CHOICE_KEY)) {
         if (userChoiceKey == null) {
-          browser = Browser.Unknown;
+          browser = Browsers.Unknown;
           break;
         }
         object progIdValue = userChoiceKey.GetValue("Progid");
         if (progIdValue == null) {
-          browser = Browser.Unknown;
+          browser = Browsers.Unknown;
           break;
         }
         progId = progIdValue.ToString();
         switch (progId) {
           case "IE.HTTP":
-            browser = Browser.InternetExplorer;
+            browser = Browsers.InternetExplorer;
             break;
           case "FirefoxURL":
-            browser = Browser.Firefox;
+            browser = Browsers.Firefox;
             break;
           case "ChromeHTML":
-            browser = Browser.Chrome;
+            browser = Browsers.Chrome;
             break;
           case "OperaStable":
-            browser = Browser.Opera;
+            browser = Browsers.Opera;
             break;
           case "SafariHTML":
-            browser = Browser.Safari;
+            browser = Browsers.Safari;
             break;
           case "AppXq0fevzme2pys62n3e0fbqa7peapykr8v":
-            browser = Browser.Edge;
+            browser = Browsers.Edge;
             break;
           default:
-            browser = Browser.Unknown;
+            browser = Browsers.Unknown;
             break;
         }
       }
 
       return browser;
     }
-    public static Browser GetDefaultHTTP()
+    public static Browsers GetDefaultHTTP()
     {
       string name = string.Empty;
       RegistryKey regKey = null;
@@ -141,19 +142,19 @@ namespace ProcessInjection
         }
 
         if (name.ToLower().Contains("firefox")) {
-          return Browser.Firefox;
+          return Browsers.Firefox;
         } else if (name.ToLower().Contains("chrome")) {
-          return Browser.Chrome;
+          return Browsers.Chrome;
         } else if (name.ToLower().Contains("edge")) {
-          return Browser.Edge;
+          return Browsers.Edge;
         } else if (name.ToLower().Contains("safari")) {
-          return Browser.Safari;
+          return Browsers.Safari;
         } else if (name.ToLower().Contains("iexplorer") || name.ToLower().StartsWith("ie")) {
-          return Browser.InternetExplorer;
+          return Browsers.InternetExplorer;
         } else if (name.ToLower().Contains("opera")) {
-          return Browser.Opera;
+          return Browsers.Opera;
         }
-        return Browser.Unknown;
+        return Browsers.Unknown;
 
 
       } catch (Exception ex) {
@@ -165,7 +166,7 @@ namespace ProcessInjection
           regKey.Close();
       }
       //return the value
-      return name;
+      return Browsers.Unknown;
 
     }
   }
