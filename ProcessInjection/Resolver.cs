@@ -142,6 +142,7 @@ namespace ProcessInjection
           if (proc.SessionId == session) {
             pid = proc.Id;
             Console.WriteLine($"[>] process ID found: {pid}.");
+            return pid;
           }
         }
       } catch (Exception ex) {
@@ -158,7 +159,7 @@ namespace ProcessInjection
         pid = FindProcIdByName(name);
         if (pid > 0) {
           Console.WriteLine($"[>] Found pid for name {name}");
-          return 0;
+          return pid;
         }
       }
       return 0;

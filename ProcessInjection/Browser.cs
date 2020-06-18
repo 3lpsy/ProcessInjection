@@ -21,12 +21,15 @@ namespace ProcessInjection
       if (def == Browsers.Unknown || def == Browsers.Safari) {
         def = GetDefaultHTTP();
       }
-      int pid;
 
-      pid = FindPidForBrowser(def);
-      if (pid > 0) {
-        return pid;
+      int pid;
+      if (def == Browsers.Unknown || def == Browsers.Safari) {
+        pid = FindPidForBrowser(def);
+        if (pid > 0) {
+          return pid;
+        }
       }
+
       return 0;
     }
     public static int FindBrowserPid()
