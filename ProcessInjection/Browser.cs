@@ -46,7 +46,6 @@ namespace ProcessInjection
 
       foreach (string progPath in progPaths) {
         var resPath = Path.Combine(programFiles, progPath);
-        Console.WriteLine($"[>] Looking for {resPath}");
         if (File.Exists(resPath)) {
           Console.WriteLine($"[>] Browser path found: {resPath}");
           return resPath;
