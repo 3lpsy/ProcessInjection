@@ -110,7 +110,7 @@ namespace ProcessInjection
           return Browsers.Firefox;
         } else if (name.ToLower().Contains("chrome")) {
           return Browsers.Chrome;
-        } else if (name.ToLower().Contains("edge") || name.ToLower().Contains("")) {
+        } else if (name.ToLower().Contains("edge") || name.ToLower().Contains("Appx")) {
           return Browsers.Edge;
         } else if (name.ToLower().Contains("safari")) {
           return Browsers.Safari;
