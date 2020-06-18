@@ -23,7 +23,7 @@ namespace ProcessInjection
       }
 
       int pid;
-      if (def == Browsers.Unknown || def == Browsers.Safari) {
+      if (def != Browsers.Unknown && def != Browsers.Safari) {
         pid = FindPidForBrowser(def);
         if (pid > 0) {
           return pid;
@@ -93,7 +93,6 @@ namespace ProcessInjection
 
     public static Browsers GetDefaultBrowser()
     {
-      Browsers browser;
       string name;
       using (RegistryKey userChoiceKey = Registry.CurrentUser.OpenSubKey(CHOICE_KEY)) {
         if (userChoiceKey == null) {
